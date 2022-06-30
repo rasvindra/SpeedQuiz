@@ -80,6 +80,15 @@ button {
   width: 80vw;
 }
 
+
+.quiz li {
+  padding: 5px 0px;
+  border: #48b4ef 2px solid;
+  text-align: center;
+  border-radius: .4rem;
+  list-style: none
+}
+
 .quiz.hide {
 display:none
 }
@@ -90,8 +99,9 @@ span {
 	margin: auto;
 	padding-top: 60px;
 	text-align: center;
-	font-size: 100px;
+	font-size: 40px;
 }
+
 
 .score {
 display: block;

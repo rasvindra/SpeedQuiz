@@ -1,10 +1,10 @@
 var timeLeft = 30;
+var timeEl = document.getElementById("seconds")
 var quizcontainer = document.getElementById("quiz")
 var resultscontainer =document.getElementById("score")
 var quizquestionsIndex = 0 
 
-//var savedWins =   ;
-//var savedLosses =  ;
+//var savedScore =   ;
 
 
 var quizQuestions = [
@@ -15,7 +15,7 @@ var quizQuestions = [
       b: "Green",
       c: "Purple"
     },
-    correctAnswer: "b"
+    correctAnswer: "Green"
   },
   {
     question: "How did I learn to setup questions this way?",
@@ -24,7 +24,7 @@ var quizQuestions = [
       b: "An alien did my homework",
       c: "By doing some research on the internet"
     },
-    correctAnswer: "c"
+    correctAnswer: "By doing some research on the internet"
   },
   {
     question: "How difficult is it to drink from a waterfall while standing uder it",
@@ -33,7 +33,7 @@ var quizQuestions = [
       b: "You will most likely choke and die",
       c: "All of the above",
     },
-    correctAnswer: "c"
+    correctAnswer: "All of the above"
   },
   {
     question: "If you get frustrated learning code you should:",
@@ -42,13 +42,13 @@ var quizQuestions = [
       b: "Take out your frustration on your computer",
       c: "Step away for awhile",
     },
-    correctAnswer: "c"
+    correctAnswer: "Step away for awhile"
   }
 ];
 
 
 function quizBegin(){
-  var answer = confirm ("Are you ready to Begin? You will have 30 seconds to answer 5 questions. For every incorrect answer you will lose 5 seconds on the Clock. Good luck!")
+  var answer = confirm ("Are you ready to Begin? You will have 30 seconds to answer 4 questions. For every incorrect answer you will lose 5 seconds on the Clock. Good luck!")
 if (answer){
     runQuiz()
 }
@@ -64,23 +64,62 @@ function runQuiz(){
 
 
 function loadQuestion(){
-  quizQuestions[0]
-  var question = quizQuestions[0]
+  //quizQuestions[quizquestionsIndex] is this even needed
+  var question = quizQuestions[quizquestionsIndex]
   document.getElementById("questionarea").innerHTML=question.question
-  document.getElementById("answerA").innerHTML=answers.a
-  document.getElementById("answerB").innerHTML=answers.b
-  document.getElementById("answerC").innerHTML=answers.c
+  var ansA = document.getElementById("answerA");
+  ansA.innerHTML=question.answers.a;
+  ansA.addEventListener('click', checkAnswer);
 
-// do this for all spots in the array
+  var ansB = document.getElementById("answerB");
+  ansB.innerHTML=question.answers.b;
+  ansB.addEventListener('click', checkAnswer);
+
+  var ansC = document.getElementById("answerC");
+  ansC.innerHTML=question.answers.c;
+  ansC.addEventListener('click', checkAnswer);
+
+// A new function that replaces values from object array once user selects correct li
 }
 
 function countdown() {
 	timeLeft--;
-	document.getElementById("seconds").innerHTML = String( timeLeft );
+	timeEl.innerHTML = timeLeft;
 	if (timeLeft > 0) {
 		setTimeout(countdown, 1000);
 	}
 };
+
+function endGame(){}
+// hide question area
+// input intitial
+// submit button store to local storage
+
+function checkAnswer(){
+ if  (this.innerText === quizQuestions[quizquestionsIndex].correctAnswer){
+  console.log("Good Job!")
+ }
+ else {
+  console.log("Wrong! You will be deducted 5 seconds!")
+  timeLeft -=5;
+  if (timeLeft < 0){
+    timeLeft = 0
+  }
+  timeEl.innerHTML = timeLeft;
+ }
+
+ // MOVE INDEX TO NEXT QUESTION
+ quizquestionsIndex++
+
+ // CHECK TO SEE IF QUESTIONS LEFT
+ if (quizquestionsIndex === quizQuestions.length){
+endGame()
+ }
+else
+{
+  loadQuestion()
+}
+}
 
 
 function init() {
