@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./Assests/CSS/style.css" />
+    <title>Document</title>
+</head>
+<body>
+    <header>
+        <h1>Answer the Questions within the time Provided</h1>
+        <button id="playGame">Click to Start Speed Trivia</button> 
+    </header>
+    
+    <main>
+      
+        <div class="timerdisplay">
+          <h2>Count Down Timer</h2>
+          <div id="clock">
+            <span id="seconds">30</span>
+          </div>  
+        </div>
+        <div class="quiz hide" id="questions">
+          <h2>Answer Here</h2>
+          <p>Questions: <span id="questionarea"></span></p>
+          <ul class="answerAll">
+            <li id ="answerA"></li>
+            <li id ="answerB"></li>
+            <li id ="answerC"></li>
+          </ul>
+        </div>
+        
+    </main>
+    <div class="score">
+      <h2>Total wins/Losses</h2>
+      <p>Wins: <span id="saved-wins"></span></p>
+      <p>Losses <span id="saved-losses"></span></p>
+    </div>
+
+    <script src="./Assests/JS/JSstarter.js"></script>
+</body>
+</html>
