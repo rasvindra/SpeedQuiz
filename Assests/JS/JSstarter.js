@@ -1,12 +1,15 @@
+// Global Variables
 var timeLeft = 30;
+var time = 30;
+var timeId =""
 var timeEl = document.getElementById("seconds")
-var quizcontainer = document.getElementById("quiz")
-var resultscontainer =document.getElementById("score")
+var quizContainer = document.getElementById("questions")
+var resultscontquainer =document.getElementById("score")
 var quizquestionsIndex = 0 
+var savedScore = ""
+var scores = []
 
-//var savedScore =   ;
-
-
+// Array of Objects that holds all my question and answers
 var quizQuestions = [
   {
     question: "What color is created when you mix yellow and blue",
@@ -46,25 +49,22 @@ var quizQuestions = [
   }
 ];
 
-
+//function that loads promt when button is pushed that explains game and asks if user wants to continue
 function quizBegin(){
   var answer = confirm ("Are you ready to Begin? You will have 30 seconds to answer 4 questions. For every incorrect answer you will lose 5 seconds on the Clock. Good luck!")
 if (answer){
     runQuiz()
 }
 }
-
+//Function that begins countdown and loads the questions and answers
 function runQuiz(){
-  alert("working yay!!") //test alert
-  countdown()
-  var element = document.getElementById("questions");
-  element.classList.remove("hide");
+  quizContainer.classList.remove("hide");
+  timeId = setInterval(countdown, 1000)
   loadQuestion()
 }
 
-
+//Function that itterates through Array to load questions and answers
 function loadQuestion(){
-  //quizQuestions[quizquestionsIndex] is this even needed
   var question = quizQuestions[quizquestionsIndex]
   document.getElementById("questionarea").innerHTML=question.question
   var ansA = document.getElementById("answerA");
@@ -79,21 +79,45 @@ function loadQuestion(){
   ansC.innerHTML=question.answers.c;
   ansC.addEventListener('click', checkAnswer);
 
-// A new function that replaces values from object array once user selects correct li
 }
 
+//Function that creates 30 second countdown times and displays
 function countdown() {
 	timeLeft--;
 	timeEl.innerHTML = timeLeft;
-	if (timeLeft > 0) {
-		setTimeout(countdown, 1000);
+	if (timeLeft <= 0) {
+		endGame()
 	}
 };
+// function that runs when all questions are answered or time runs out and notifys user of game end. and pulls up confirm prompt to see if user wants to post score
+function endGame(){
+  clearInterval(
+    timeId
+  );
+function myFunction() {
+  let text;
+  let person = prompt("Please enter your name:", "Enter Name");
+  if (person == null || person == "") {
+    text = "No Name Entered";
+  } 
+  savedScore = text + timeLeft
+  document.getElementById(savedScore).innerHTML = text;
+  
+}
+myFunction()
+  confirm("Quiz Complete! Your Score is " + timeLeft + ". Would you like to post Your Score?")
+  
+  // HELP
+  if (true); // need to store locally and display with initials in Highest Score div
+    else{}
+    //document. location;reload()
+    quizContainer.classList.add("hide")
+  //element.classList.display("none")
+  localStorage.setItem("scores",savedScore)
+  scores = localStorage.getItem("scores")
+}
 
-function endGame(){}
-// hide question area
-// input intitial
-// submit button store to local storage
+// function that verfies if correct answer was clicked colsole logs for testing and pulls next question from Array
 
 function checkAnswer(){
  if  (this.innerText === quizQuestions[quizquestionsIndex].correctAnswer){
@@ -107,11 +131,9 @@ function checkAnswer(){
   }
   timeEl.innerHTML = timeLeft;
  }
-
- // MOVE INDEX TO NEXT QUESTION
  quizquestionsIndex++
 
- // CHECK TO SEE IF QUESTIONS LEFT
+ // CHECK TO SEE IF ANY QUESTIONS LEFT in ARRAY
  if (quizquestionsIndex === quizQuestions.length){
 endGame()
  }
@@ -121,7 +143,7 @@ else
 }
 }
 
-
+/* what am i doing?
 function init() {
   var savedWins = JSON.parse(localStorage.getItem("Stored Wins"));
   if (savedWins !== null)
@@ -129,15 +151,8 @@ function init() {
   var savedLosses = JSON.parse(localStorage.getItem("Stored Losses"));
   if (savedWins !== null) 
     losses = savedLosses;
-  }
+  }  */
 
 document.querySelector("#playGame").addEventListener("click", quizBegin)
 
-console.log(quizQuestions[0].question) //test
-
-//localStorage.setItem("Stored Wins",savedWins);
-//localStorage.setItem("Stored Losses",savedLosses);
-
-//console.log()
-//localStorage.clear()
-
+//localStorage.clear() 
